@@ -1,0 +1,5 @@
+.buildozer/
+bin/
+error.txt
+full_log.txt
+__pycache__/
