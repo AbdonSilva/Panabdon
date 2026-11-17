@@ -33,14 +33,16 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython==0.29.33
 
-      - name: Construir la APK (Debug)
+      --name: Construir la APK (Debug)
         run: |
           export P4A_LOCAL_RECIPES_DIR="$(pwd)/p4a-recipes"
           yes | buildozer -v android debug
-
         env:
-          CFLAGS: "-Wno-error=unused-command-line-argument"
-          LDFLAGS: "-Wno-error=unused-command-line-argument"
+          CC: gcc
+          CXX: g++
+          CFLAGS: "-fPIC"
+          LDFLAGS: "-fPIC" 
+
 
       - name: Subir la APK generada como Artefacto
         uses: actions/upload-artifact@v4
