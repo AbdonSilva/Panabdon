@@ -36,6 +36,9 @@ jobs:
       - name: Construir la APK (Debug)
         run: |
           yes | buildozer -v android debug
+        env:
+          CFLAGS: "-Wno-error=unsupported-option -Wno-unused-command-line-argument"
+          LDFLAGS: "-Wno-error=unsupported-option"
 
       - name: Subir la APK generada como Artefacto
         uses: actions/upload-artifact@v4
