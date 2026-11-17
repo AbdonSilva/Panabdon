@@ -33,13 +33,34 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython==0.29.33
 
+      - name: Crear parche anti-error para Clang
+        run: |
+          mkdir -p /tmp/clang-wrapper
+          cat << 'EOF' > /tmp/clang-wrapper/clang
+          #!/bin/bash
+          for arg in "$@"; do
+            if [ "$arg" = "-print-multi-os-directory" ]; then
+              echo ""
+              exit 0
+            fi
+          done
+          REAL_CLANG=$(find /home/runner/.buildozer -name "clang" -type f -executable ! -path "*/clang-wrapper/*" 2>/dev/null | head -n 1)
+          if [ -z "$REAL_CLANG" ]; then
+            REAL_CLANG="/usr/bin/clang"
+          fi
+          exec "$REAL_CLANG" "$@"
+          EOF
+          chmod +x /tmp/clang-wrapper/clang
+          cp /tmp/clang-wrapper/clang /tmp/clang-wrapper/clang++
+          echo "/tmp/clang-wrapper" >> $GITHUB_PATH
+
       - name: Construir la APK (Debug)
         run: |
           export P4A_LOCAL_RECIPES_DIR="$(pwd)/p4a-recipes"
           yes | buildozer -v android debug
         env:
-          CC: gcc
-          CXX: g++
+          CC: clang
+          CXX: clang++
           CFLAGS: "-fPIC"
           LDFLAGS: "-fPIC"
 
