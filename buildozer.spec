@@ -17,7 +17,7 @@ android.archs = arm64-v8a
 
 android.api = 33
 android.minapi = 24
-android.ndk = 26b
+android.ndk = 23b
 android.skip_update = False
 
 [buildozer]
