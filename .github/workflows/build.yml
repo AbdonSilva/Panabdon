@@ -54,17 +54,16 @@ jobs:
           cp /tmp/clang-wrapper/clang /tmp/clang-wrapper/clang++
           echo "/tmp/clang-wrapper" >> $GITHUB_PATH
 
-      - - name: Construir la APK (Debug)
+      - name: Construir la APK (Debug)
         run: |
           export P4A_LOCAL_RECIPES_DIR="$(pwd)/p4a-recipes"
           yes | buildozer -v android debug
         env:
-          CC: gcc
-          CXX: g++
-          LD: gcc
-          HOSTCC: gcc
+          CC: clang
+          CXX: clang++
           CFLAGS: "-fPIC"
           LDFLAGS: "-fPIC"
+
       - name: Subir la APK generada como Artefacto
         uses: actions/upload-artifact@v4
         with:
