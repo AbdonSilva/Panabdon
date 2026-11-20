@@ -7,7 +7,7 @@ source.include_exts = py,png,jpg,kv,atlas,c,so
 version = 0.1
 
 # CORREGIDO: Quitamos python3==3.11 (dejamos python3) y quitamos miakivy (ya se incluye solo)
-requirements = python3,kivy,openpyxl,et_xmlfile,pillow
+requirements = python3,kivy,openpyxl,et_xmlfile,pillow,requests,urllib3,idna,certifi,charset-normalizer==3.3.2
 
 p4a.branch = master
 p4a.local_recipes = p4a-recipes
